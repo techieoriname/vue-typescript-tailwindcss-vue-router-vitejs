@@ -1,18 +1,71 @@
 <script setup lang="ts">
+import {reactive, ref} from "vue";
+import {useRouter} from "vue-router";
+import {useTitle} from "@vueuse/core";
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import store from "../store";
 
+const router = useRouter()
+useTitle(`Login - ${store.state.title}`)
+
+const form = reactive({
+  email: 'admin@example.com',
+  password: '123456'
+})
+const errorMsg = ref<string | null>(null)
+
+const loading = ref(false)
+
+async function Login() {
+  try {
+    loading.value = !loading.value
+    if (form.email === 'admin@example.com' && form.password === '123456') {
+      setTimeout(async () => {
+        store.UPDATE_LOGGED_IN(true)
+        await router.push({name: 'User'})
+      }, 3000)
+    } else {
+      errorMsg.value = null
+      setTimeout(() => {
+        errorMsg.value = "Incorrect login details!"
+        loading.value = !loading.value
+      }, 3000)
+    }
+  } catch (e) {
+    loading.value = !loading.value
+  }
+}
 </script>
 <template>
   <main class="h-screen flex items-center px-6 lg:px-32 text-green-800 relative">
-    <Header />
+    <Header/>
     <section class="w-full md:w-9/12 xl:w-8/12 flex items-center justify-center mx-auto">
-      <img src="../assets/logo.png" alt="Vue">
-      <h1 class="text-3xl lg:text-5xl font-bold text-black px-3">
-        Vue + Typescript + Tailwind + Vue Router + Vite
-      </h1>
+      <form @submit.prevent="Login" class="w-full md:w-7/12 space-y-4 my-10">
+        <h3 class="text-2xl text-black font-semibold text-center border-b pb-4">Login</h3>
+        <div class="flex flex-col space-y-2">
+          <label for="email" class="text-sm text-black font-semibold">Email</label>
+          <input v-model="form.email" class="input__text" type="email" id="email" placeholder="Enter your email"
+                 autofocus>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <label for="password" class="text-sm text-black font-semibold">Password</label>
+          <input v-model="form.password" class="input__text" type="password" id="password"
+                 placeholder="Enter your password">
+        </div>
+        <p v-if="errorMsg" class="text-sm text-red-500 font-normal"><i class="fas fa-exclamation-circle px-1"></i>
+          {{ errorMsg }}</p>
+        <div class="flex justify-between items-center">
+          <router-link :to="{ name: 'Home' }">
+            <span class="text-sm">Go Back Home</span>
+          </router-link>
+          <button type="submit" class="button disabled:bg-green-500 disabled:cursor-not-allowed" :disabled="loading"><i
+              v-if="loading" class="fas fa-spinner animate-spin-slow px-1"></i> Login
+          </button>
+        </div>
+
+      </form>
     </section>
-    <footer class="absolute right-0 bottom-0 p-6 lg:p-32">
-      <p class="font-bold mb-1">Yours Truly</p>
-      <p>T E C H I E O R I N A M E</p>
-    </footer>
+    <Footer/>
   </main>
 </template>

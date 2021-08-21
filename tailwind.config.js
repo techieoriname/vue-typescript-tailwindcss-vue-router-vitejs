@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
+      },
+      animation: {
+        'spin-slow': 'spin 2s linear infinite'
       }
     },
     colors: {
