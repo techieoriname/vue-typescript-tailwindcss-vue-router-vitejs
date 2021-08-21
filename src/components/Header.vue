@@ -1,9 +1,13 @@
 <template>
- <h1>ABOUT</h1>
+$END$
 </template>
 
 <script>
 export default {
-  name: "About"
+name: "Header.vue"
 }
 </script>
+
+<style scoped>
+
+</style>
