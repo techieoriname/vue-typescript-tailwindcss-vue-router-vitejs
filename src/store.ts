@@ -1,7 +1,7 @@
 import {reactive, readonly} from "vue"
-import BrowserStorage from '@trapcode/browser-storage'; //Persistent State
+import BrowserStorage from '@trapcode/browser-storage'; // Persistent State
 
-//Documentation here https://www.npmjs.com/package/@trapcode/browser-storage
+// Documentation here https://www.npmjs.com/package/@trapcode/browser-storage
 // Initialize
 const localStore = BrowserStorage.getLocalStore('techieoriname');
 

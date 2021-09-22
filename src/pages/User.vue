@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {useRouter} from "vue-router";
+import {useTitle} from "@vueuse/core";
+import store from "../store";
 import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue";
-import store from "../store";
-import {useTitle} from "@vueuse/core";
 
 const router = useRouter()
 useTitle(`User Logged In - ${store.state.title}`)
@@ -34,7 +34,7 @@ async function Logout() {
       <div class="space-y-3">
         <h3 class="text-green-700 text-3xl font-semibold">You are currently Logged in</h3>
         <p class="text-black float-right">
-          <button @click="Logout" type="submit" class="button disabled:bg-green-500 disabled:cursor-not-allowed" :disabled="loading"><i v-if="loading" class="fas fa-spinner animate-spin-slow px-1"></i>
+          <button type="submit" class="button disabled:bg-green-500 disabled:cursor-not-allowed" :disabled="loading" @click="Logout"><i v-if="loading" class="fas fa-spinner animate-spin-slow px-1"></i>
             {{ buttonText }}</button>
         </p>
       </div>

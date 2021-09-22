@@ -1,42 +1,41 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
-import Default from '@/layouts/Default.vue'
-import {MetaMiddlewares} from "./utils/types";
-import {auth} from "./middlewares/auth";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { MetaMiddlewares } from "./utils/types";
+import { auth } from "./middlewares/auth";
+import Default from "@/layouts/Default.vue";
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 const routes: Array<RouteRecordRaw> = [
     {
-        path: '/',
+        path: "/",
         component: Default,
         children: [
             {
-                path: '',
-                name: 'Home',
-                component: () => import('@/pages/Home.vue')
+                path: "",
+                name: "Home",
+                component: () => import("@/pages/Home.vue")
             },
             {
-                path: '/login',
-                name: 'Login',
-                component: () => import('@/pages/Login.vue')
+                path: "/login",
+                name: "Login",
+                component: () => import("@/pages/Login.vue")
             },
             {
-                path: '/user',
-                name: 'User',
+                path: "/user",
+                name: "User",
                 meta: {
-                    middlewares: [auth],
+                    middlewares: [auth]
                 },
-                component: () => import('@/pages/User.vue')
+                component: () => import("@/pages/User.vue")
             }
         ]
     }
-]
+];
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes
-})
+});
 
-//Middleware
 router.beforeEach((to, from, next) => {
     let middlewares = to.meta.middlewares as MetaMiddlewares;
 
@@ -65,7 +64,7 @@ router.beforeEach((to, from, next) => {
                 from,
                 next: customNext,
                 router,
-                stop: next,
+                stop: next
             });
         } else {
             // Else use default next NOT custom.
@@ -77,4 +76,4 @@ router.beforeEach((to, from, next) => {
     middlewares[0]({ to, from, next: customNext, router, stop: next });
 });
 
-export default router
+export default router;

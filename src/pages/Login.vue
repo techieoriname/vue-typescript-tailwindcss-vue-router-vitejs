@@ -2,9 +2,9 @@
 import {reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useTitle} from "@vueuse/core";
+import store from "../store";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import store from "../store";
 
 const router = useRouter()
 useTitle(`Login - ${store.state.title}`)
@@ -41,16 +41,16 @@ async function Login() {
   <main class="h-screen flex items-center px-6 lg:px-32 text-green-800 relative">
     <Header/>
     <section class="w-full md:w-9/12 xl:w-8/12 flex items-center justify-center mx-auto">
-      <form @submit.prevent="Login" class="w-full md:w-7/12 space-y-4 my-10">
+      <form class="w-full md:w-7/12 space-y-4 my-10" @submit.prevent="Login">
         <h3 class="text-2xl text-black font-semibold text-center border-b pb-4">Login</h3>
         <div class="flex flex-col space-y-2">
           <label for="email" class="text-sm text-black font-semibold">Email</label>
-          <input v-model="form.email" class="input__text" type="email" id="email" placeholder="Enter your email"
+          <input id="email" v-model="form.email" class="input__text" type="email" placeholder="Enter your email"
                  autofocus>
         </div>
         <div class="flex flex-col space-y-2">
           <label for="password" class="text-sm text-black font-semibold">Password</label>
-          <input v-model="form.password" class="input__text" type="password" id="password"
+          <input id="password" v-model="form.password" class="input__text" type="password"
                  placeholder="Enter your password">
         </div>
         <p v-if="errorMsg" class="text-sm text-red-500 font-normal"><i class="fas fa-exclamation-circle px-1"></i>

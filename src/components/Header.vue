@@ -12,7 +12,7 @@
 
       <div>
         <ul class="grid grid-cols-12 gap-4">
-          <li class="ml-24 col-span-6 lg:col-span-3" v-for="(f, i) in features" :key="i">
+          <li v-for="(f, i) in features" :key="i" class="ml-24 col-span-6 lg:col-span-3">
               <div class="flex items-center justify-end cursor-pointer">
                 <div class="w-10 border-b border-solid border-white"></div>
                 <h1 class="ml-3 text-3xl font-bold">{{ ++i }}</h1>
